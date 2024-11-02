@@ -1,0 +1,83 @@
+Tech Design
+1. How to Run the App
+Clone the Project:
+
+npm install
+Start the App:
+
+npm start
+Runs the app on http://localhost:3000.
+
+
+2. Components Overview
+
+App.tsx:
+The main component that holds everything together.
+Manages the list of favorite characters (pulled from localStorage when the app loads).
+Passes the favorites and relevant functions to CharacterList and FavoriteList.
+
+CharacterList.tsx:
+Displays Star Wars characters from the SWAPI API.
+Handles pagination and displays a list of characters with:
+A random image
+Character name
+A "Favorite" checkbox to mark/unmark characters as favorites
+Uses SearchBar for the search functionality.
+Clicking on a character opens CharacterModal to display more details.
+
+SearchBar.tsx:
+A standalone component for the search input.
+Takes searchQuery and setSearchQuery props to manage the search state.
+Updates the search query in CharacterList as the user types.
+
+CharacterModal.tsx:
+A popup that shows details about a selected character:
+Height
+Mass
+Birth year
+Number of films
+Homeworld details (with an additional API call if needed)
+
+FavoriteList.tsx:
+Lists characters marked as favorites.
+Includes a button to change the background color of the list.
+Saves the background color to localStorage.
+
+
+3. How Stuff Works
+
+API Calls:
+Using SWAPI API to get character and homeworld details:
+GET /people: Fetches a list of characters.
+GET /planets/:id: Fetches details about a character's homeworld.
+State Management:
+
+Using React Hooks:
+characters: Stores characters fetched from the API.
+favorites: Stores favorite characters, loaded from and saved to localStorage.
+searchQuery: The current search input value.
+loading: Indicates if data is being fetched.
+bgColor: Background color for the FavoriteList, saved to localStorage.
+
+
+4. How Everything Connects
+
+Rendering Components:
+App.tsx: Initializes the favorites state from localStorage and renders CharacterList and FavoriteList.
+CharacterList: Fetches and displays characters from the SWAPI API and handles pagination.
+FavoriteList: Shows favorite characters and provides an option to change the background color.
+
+Searching:
+SearchBar Component: Handles the search input.
+User types in the SearchBar, updating the searchQuery in CharacterList.
+Characters are fetched based on the search input, and the list updates automatically.
+Modal Details:
+
+User clicks on a character card in CharacterList.
+CharacterModal opens and displays character details.
+If necessary, the modal fetches additional data about the homeworld from the API.
+
+Managing Favorites:
+User marks or unmarks a character as a favorite using the checkbox in CharacterList.
+The favorites list is updated and saved to localStorage.
+FavoriteList updates immediately, and the user can change the background color, which is also saved to localStorage.
